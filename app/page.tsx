@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import MagicBento from '@/components/ui/magic-bento';
 
 export default function Home() {
   // 攝影作品資料
@@ -143,14 +146,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section with Parallax */}
-      <section className="py-20 px-4 bg-gray-900 parallax-section">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">關於我</h2>
-          <p className="text-xl text-gray-300 leading-relaxed">
-            熱衷於捕捉真實時刻並創作與觀眾產生共鳴的視覺敘事。
-            專精於人像攝影、風景攝影和商業攝影。
-          </p>
+      {/* Magic Bento Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16">我的服務</h2>
+          <div className="flex justify-center">
+            <MagicBento />
+          </div>
         </div>
       </section>
 
