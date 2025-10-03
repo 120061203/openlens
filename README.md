@@ -1,36 +1,249 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OpenLens - 攝影作品平台 📸
 
-## Getting Started
+一個現代化的攝影作品展示和銷售平台，提供高品質的攝影作品瀏覽、下載和付費購買功能。
 
-First, run the development server:
+## ✨ 功能特色
 
+### 🎨 作品展示
+- **精美作品集** - 以網格布局展示攝影作品，支援回應式設計
+- **作品預覽** - 點擊查看作品詳情和高品質預覽
+- **分類篩選** - 支援按類別、風格、主題篩選作品
+
+### 💰 付費功能
+- **線上購買** - 支援攝影作品的線上購買和支付
+- **多種支付方式** - 整合主流支付網關（支付寶、微信支付、銀行卡等）
+- **價格體系** - 靈活的價格設定，支援不同解析度不同定價
+- **訂單管理** - 使用者購買歷史和訂單追蹤
+
+### 📥 下載服務
+- **高清下載** - 購買後可下載原始解析度作品
+- **多種格式** - 支援JPEG、PNG、TIFF等多種格式
+- **批次下載** - 支援多作品批次打包下載
+- **下載保護** - 防止未授權使用者下載
+
+### 👤 使用者系統
+- **使用者註冊登入** - 支援郵箱、社群媒體帳號登入
+- **個人中心** - 使用者作品收藏、購買歷史管理
+- **收藏夾** - 可收藏喜歡的作品，方便後續查看
+
+## 🚀 技術棧
+
+- **前端框架**: Next.js 15.5.2
+- **React**: React 19.1.0
+- **樣式**: Tailwind CSS 4.1.14
+- **類型檢查**: TypeScript 5
+- **程式碼規範**: ESLint 9
+- **套件管理**: npm
+
+## 🛠️ 安裝與設定
+
+### 環境需求
+- Node.js 18.x 或更高版本
+- npm 或 yarn 或 pnpm
+
+### 安裝步驟
+
+1. **複製專案**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd openlens
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **安裝依賴**
+```bash
+npm install
+# 或
+yarn install
+# 或
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **環境配置**
+建立 `.env.local` 檔案並配置必要的環境變數：
+```env
+# 資料庫配置
+DATABASE_URL="your-database-url"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 支付配置
+PAYMENT_SECRET_KEY="your-payment-secret"
+PAYMENT_PUBLIC_KEY="your-payment-public"
 
-## Learn More
+# 檔案儲存配置
+STORAGE_BUCKET="your-storage-bucket"
+AWS_ACCESS_KEY_ID="your-aws-access-key"
+AWS_SECRET_ACCESS_KEY="your-aws-secret-key"
 
-To learn more about Next.js, take a look at the following resources:
+# 郵件服務配置
+SMTP_HOST="your-smtp-host"
+SMTP_PORT="587"
+SMTP_USER="your-smtp-user"
+SMTP_PASS="your-smtp-password"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **資料庫初始化**
+```bash
+npm run db:migrate
+npm run db:seed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. **啟動開發伺服器**
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+6. **建置生產版本**
+```bash
+npm run build
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+開啟 [http://localhost:3000](http://localhost:3000) 查看應用。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 專案結構
+
+```
+openlens/
+├── app/                    # Next.js App Router
+│   ├── api/               # API 路由
+│   │   ├── auth/          # 認證相關介面
+│   │   ├── payment/       # 支付相關介面
+│   │   ├── photos/        # 作品相關介面
+│   │   └── users/         # 使用者相關介面
+│   ├── components/        # 可複用元件
+│   ├── globals.css       # 全域樣式
+│   ├── layout.tsx        # 根佈局
+│   └── page.tsx          # 首頁
+├── components/            # 通用元件
+│   ├── Footer.tsx        # 頁腳元件
+│   └── Navbar.tsx        # 導覽列元件
+├── lib/                  # 工具庫和配置
+│   ├── db.ts            # 資料庫配置
+│   ├── payment.ts       # 支付工具
+│   └── storage.ts       # 檔案儲存工具
+├── public/              # 靜態資源
+│   ├── images/          # 圖片資源
+│   └── uploads/         # 使用者上傳檔案
+├── types/               # TypeScript 類型定義
+└── utils/               # 工具函數
+```
+
+## 🎯 使用指南
+
+### 攝影師使用
+
+1. **上傳作品**
+   - 登入攝影師帳號
+   - 在個人中心上傳攝影作品
+   - 設定作品資訊、價格和授權條款
+
+2. **管理作品**
+   - 查看作品銷售統計
+   - 管理作品價格和庫存
+   - 處理使用者諮詢和售後
+
+3. **收益管理**
+   - 查看銷售收入統計
+   - 申請提現到銀行帳戶
+   - 下載財務報表
+
+### 買家使用
+
+1. **瀏覽作品**
+   - 瀏覽首頁推薦作品
+   - 使用篩選功能尋找特定作品
+   - 預覽作品詳情和樣圖
+
+2. **購買流程**
+   - 將心儀作品加入購物車
+   - 選擇購買選項（解析度、格式等）
+   - 完成線上支付
+   - 支付成功後自動獲得下載連結
+
+3. **下載作品**
+   - 在個人中心查看已購作品
+   - 點擊下載取得高清原圖
+   - 支援多次下載和批次下載
+
+## 🔧 開發指南
+
+### 新增功能
+
+1. **前端元件開發**
+```typescript
+// components/NewFeature.tsx
+import React from 'react';
+
+interface NewFeatureProps {
+  // props 定義
+}
+
+export const NewFeature: React.FC<NewFeatureProps> = ({ /* props */ }) => {
+  return (
+    <div className="new-feature">
+      {/* 元件內容 */}
+    </div>
+  );
+};
+```
+
+2. **API 介面開發**
+```typescript
+// app/api/new-feature/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(request: NextRequest) {
+  // API 邏輯
+  return NextResponse.json({ data: result });
+}
+
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+  // 處理 POST 請求
+  return NextResponse.json({ success: true });
+}
+```
+
+### 程式碼規範
+
+- 使用 TypeScript 進行類型檢查
+- 遵循 ESLint 配置的程式碼規範
+- 元件使用函數式元件和 Hooks
+- CSS 類別名稱使用 Tailwind CSS 約定
+- 檔案命名使用 kebab-case
+
+## 🤝 貢獻指南
+
+歡迎社群貢獻！請遵循以下步驟：
+
+1. Fork 專案倉庫
+2. 建立功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 遞交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送至分支 (`git push origin feature/AmazingFeature`)
+5. 建立 Pull Request
+
+### 貢獻需求
+
+- 確保程式碼通過所有測試
+- 更新相關文件
+- 遵循專案的程式碼規範
+- 為新功能新增適當的測試用例
+
+## 📄 授權條款
+
+本專案採用 [MIT 授權條款](LICENSE) 開源協議。
+
+## 📞 聯絡方式
+
+如有問題或建議，請透過以下方式聯絡：
+
+- 📧 郵箱：contact@openlens.com
+- 💬 微信公眾號：OpenLens攝影平台
+- 🐛 問題回饋：[GitHub Issues](https://github.com/your-username/openlens/issues)
+
+## 🙏 致謝
+
+感謝所有為本專案做出貢獻的開發者、設計師和攝影師！
+
+---
+
+**OpenLens** - 為攝影藝術搭建橋樑，讓優秀作品被更多人欣賞和擁有。
