@@ -1,0 +1,11 @@
+<svg width="800" height="1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00b894;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffeaa7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#grad4)"/>
+  <path d="M400 200 Q600 100 800 300 Q600 500 400 400 Q200 300 400 200" fill="#fff" opacity="0.3"/>
+  <text x="400" y="320" text-anchor="middle" font-family="Arial" font-size="22" fill="#fff">攝影作品 4</text>
+</svg>
