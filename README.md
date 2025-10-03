@@ -26,14 +26,62 @@
 - **個人中心** - 使用者作品收藏、購買歷史管理
 - **收藏夾** - 可收藏喜歡的作品，方便後續查看
 
-## 🚀 技術棧
+## 🚀 部署指南
 
-- **前端框架**: Next.js 15.5.2
-- **React**: React 19.1.0
-- **樣式**: Tailwind CSS 4.1.14
-- **類型檢查**: TypeScript 5
-- **程式碼規範**: ESLint 9
-- **套件管理**: npm
+### GitHub Actions 自動部署
+
+本專案已配置 GitHub Actions 自動部署工作流程，支援推送到 `main` 分支時自動部署到 Vercel。
+
+#### 設定步驟
+
+1. **登入 Vercel**
+   - 前往 [vercel.com](https://vercel.com)
+   - 登入你的帳戶
+
+2. **匯入專案**
+   - 點擊 "Import Project"
+   - 選擇從 GitHub 匯入
+   - 選擇你的 `openlens` 倉庫
+
+3. **設定環境變數**
+   在 GitHub 倉庫的 Settings > Secrets and variables > Actions 中添加以下秘密：
+
+   ```bash
+   VERCEL_TOKEN=你的 Vercel Token
+   VERCEL_ORG_ID=你的 Vercel 組織 ID
+   VERCEL_PROJECT_ID=你的 Vercel 專案 ID
+   VERCEL_PROJECT_NAME=你的專案名稱（通常是倉庫名稱）
+   ```
+
+#### 取得 Vercel Token
+
+1. 前往 Vercel Dashboard
+2. 點擊右上角頭像 > Settings
+3. 選擇 "Tokens"
+4. 點擊 "Create Token"
+5. 複製產生的 Token
+
+#### 取得組織和專案 ID
+
+1. 匯入專案後，在 Vercel Dashboard 中找到你的專案
+2. 點擊專案設定（齒輪圖標）
+3. 在 URL 中找到組織 ID 和專案 ID
+   - 格式：`https://vercel.com/[org-id]/[project-name]/[project-id]`
+
+#### 工作流程功能
+
+- ✅ **自動部署**: 推送到 `main` 分支時自動部署
+- ✅ **程式碼檢查**: 運行 ESLint 和建置測試
+- ✅ **依賴緩存**: 使用 npm 緩存加速建置
+- ✅ **手動部署**: 支援從 GitHub Actions 手動觸發部署
+- ✅ **部署通知**: 輸出部署網址和狀態資訊
+
+#### 手動觸發部署
+
+1. 前往 GitHub 倉庫頁面
+2. 點擊 "Actions" 標籤
+3. 選擇 "Deploy OpenLens to Vercel" 工作流程
+4. 點擊 "Run workflow" 按鈕
 
 ## 🛠️ 安裝與設定
 

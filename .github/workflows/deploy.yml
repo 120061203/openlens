@@ -1,0 +1,119 @@
+name: Deploy OpenLens to Vercel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # 允許手動觸發部署
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests & Build
+
+    steps:
+      - name: 檢出程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 安裝依賴套件
+        run: npm ci
+
+      - name: 執行程式碼檢查
+        run: npm run lint
+
+      - name: 建置應用程式
+        run: npm run build
+
+      - name: 上傳建置檔案
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-files
+          path: .next/
+          retention-days: 1
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Vercel
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: 檢出程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 安裝依賴套件
+        run: npm ci
+
+      - name: 下載建置檔案
+        uses: actions/download-artifact@v4
+        with:
+          name: build-files
+          path: .next/
+
+      - name: 部署到 Vercel
+        uses: amondnet/vercel-action@v25
+        id: vercel-deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./
+          vercel-args: '--prod'
+
+      - name: 輸出部署資訊
+        run: |
+          echo "部署成功！"
+          echo "預覽網址: ${{ steps.vercel-deploy.outputs.preview-url }}"
+          echo "生產網址: https://${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app"
+
+  manual-deploy:
+    runs-on: ubuntu-latest
+    name: Manual Deploy to Vercel
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: 檢出程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 安裝依賴套件
+        run: npm ci
+
+      - name: 建置應用程式
+        run: npm run build
+
+      - name: 部署到 Vercel
+        uses: amondnet/vercel-action@v25
+        id: vercel-deploy-manual
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./
+          vercel-args: '--prod'
+
+      - name: 輸出部署資訊
+        run: |
+          echo "手動部署成功！"
+          echo "生產網址: https://${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app"
