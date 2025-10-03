@@ -1,19 +1,19 @@
-name: Deploy OpenLens to Vercel
+name: Deploy OpenLens to GitHub Pages
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch: # 允許手動觸發部署
+  workflow_dispatch:
 
 env:
   NODE_VERSION: '18'
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    name: Run Tests & Build
+    name: Build for GitHub Pages
 
     steps:
       - name: 檢出程式碼
@@ -31,60 +31,36 @@ jobs:
       - name: 執行程式碼檢查
         run: npm run lint
 
-      - name: 建置應用程式
+      - name: 建置靜態檔案
         run: npm run build
 
       - name: 上傳建置檔案
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: build-files
-          path: .next/
-          retention-days: 1
+          path: ./out
 
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy to Vercel
-    needs: test
+    name: Deploy to GitHub Pages
+    needs: build
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: 檢出程式碼
-        uses: actions/checkout@v4
-
-      - name: 設定 Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: 安裝依賴套件
-        run: npm ci
-
-      - name: 下載建置檔案
-        uses: actions/download-artifact@v4
-        with:
-          name: build-files
-          path: .next/
-
-      - name: 部署到 Vercel
-        uses: amondnet/vercel-action@v25
-        id: vercel-deploy
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
-          vercel-args: '--prod'
-
-      - name: 輸出部署資訊
-        run: |
-          echo "部署成功！"
-          echo "預覽網址: ${{ steps.vercel-deploy.outputs.preview-url }}"
-          echo "生產網址: https://${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app"
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
   manual-deploy:
     runs-on: ubuntu-latest
-    name: Manual Deploy to Vercel
+    name: Manual Deploy to GitHub Pages
     if: github.event_name == 'workflow_dispatch'
 
     steps:
@@ -100,20 +76,17 @@ jobs:
       - name: 安裝依賴套件
         run: npm ci
 
-      - name: 建置應用程式
+      - name: 建置靜態檔案
         run: npm run build
 
-      - name: 部署到 Vercel
-        uses: amondnet/vercel-action@v25
-        id: vercel-deploy-manual
+      - name: 手動部署到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
-          vercel-args: '--prod'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          cname: openlens.github.io # 可選：設定自訂域名
 
       - name: 輸出部署資訊
         run: |
           echo "手動部署成功！"
-          echo "生產網址: https://${{ secrets.VERCEL_PROJECT_NAME }}.vercel.app"
+          echo "部署網址: https://120061203.github.io/openlens"

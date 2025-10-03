@@ -28,60 +28,62 @@
 
 ## 🚀 部署指南
 
-### GitHub Actions 自動部署
+### GitHub Pages 自動部署
 
-本專案已配置 GitHub Actions 自動部署工作流程，支援推送到 `main` 分支時自動部署到 Vercel。
+本專案已配置 GitHub Actions 自動部署工作流程，支援推送到 `main` 分支時自動建置並部署到 GitHub Pages。
 
 #### 設定步驟
 
-1. **登入 Vercel**
-   - 前往 [vercel.com](https://vercel.com)
-   - 登入你的帳戶
+1. **啟用 GitHub Pages**
+   - 前往你的 GitHub 倉庫頁面
+   - 點擊 **Settings** 標籤
+   - 在左側選單中選擇 **Pages**
+   - 在 **Source** 設定中選擇 **GitHub Actions**
 
-2. **匯入專案**
-   - 點擊 "Import Project"
-   - 選擇從 GitHub 匯入
-   - 選擇你的 `openlens` 倉庫
-
-3. **設定環境變數**
-   在 GitHub 倉庫的 Settings > Secrets and variables > Actions 中添加以下秘密：
-
-   ```bash
-   VERCEL_TOKEN=你的 Vercel Token
-   VERCEL_ORG_ID=你的 Vercel 組織 ID
-   VERCEL_PROJECT_ID=你的 Vercel 專案 ID
-   VERCEL_PROJECT_NAME=你的專案名稱（通常是倉庫名稱）
-   ```
-
-#### 取得 Vercel Token
-
-1. 前往 Vercel Dashboard
-2. 點擊右上角頭像 > Settings
-3. 選擇 "Tokens"
-4. 點擊 "Create Token"
-5. 複製產生的 Token
-
-#### 取得組織和專案 ID
-
-1. 匯入專案後，在 Vercel Dashboard 中找到你的專案
-2. 點擊專案設定（齒輪圖標）
-3. 在 URL 中找到組織 ID 和專案 ID
-   - 格式：`https://vercel.com/[org-id]/[project-name]/[project-id]`
+2. **設定靜態匯出**
+   - 專案已配置 `next.config.ts` 支援靜態匯出
+   - 建置時會產生靜態檔案到 `out/` 目錄
+   - 支援 GitHub Pages 的路徑設定
 
 #### 工作流程功能
 
+- ✅ **靜態匯出**: Next.js 應用程式建置為靜態檔案
 - ✅ **自動部署**: 推送到 `main` 分支時自動部署
 - ✅ **程式碼檢查**: 運行 ESLint 和建置測試
 - ✅ **依賴緩存**: 使用 npm 緩存加速建置
 - ✅ **手動部署**: 支援從 GitHub Actions 手動觸發部署
-- ✅ **部署通知**: 輸出部署網址和狀態資訊
 
-#### 手動觸發部署
+#### 部署網址
 
-1. 前往 GitHub 倉庫頁面
-2. 點擊 "Actions" 標籤
-3. 選擇 "Deploy OpenLens to Vercel" 工作流程
-4. 點擊 "Run workflow" 按鈕
+部署成功後，你的網站將可在以下網址訪問：
+
+```
+https://120061203.github.io/openlens
+```
+
+#### 靜態匯出設定說明
+
+專案使用以下 Next.js 設定來支援靜態匯出：
+
+```typescript
+// next.config.ts
+const nextConfig: NextConfig = {
+  output: 'export',           // 啟用靜態匯出
+  trailingSlash: true,        // 為所有路由添加結尾斜線
+  images: {
+    unoptimized: true,        // 停用圖片優化（GitHub Pages 不支援）
+  },
+  // GitHub Pages 設定
+  basePath: process.env.NODE_ENV === 'production' ? '/openlens' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/openlens/' : '',
+};
+```
+
+#### 注意事項
+
+- **靜態網站限制**: GitHub Pages 部署的靜態網站無法使用服務端功能（如 API 路由）
+- **圖片優化**: 已停用 Next.js 的圖片優化功能，建議使用靜態圖片檔案
+- **路由設定**: 支援客戶端路由，但需要正確設定 `basePath`
 
 ## 🛠️ 安裝與設定
 
