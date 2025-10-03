@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OpenLens - Photography Portfolio",
-  description: "Professional photography portfolio showcasing creative visual stories and moments captured through the lens.",
+  title: "OpenLens - 攝影作品平台",
+  description: "專業攝影作品集，展現創意視覺故事和鏡頭捕捉的精彩時刻。",
 };
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh-TW">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>
