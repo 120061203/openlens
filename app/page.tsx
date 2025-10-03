@@ -7,7 +7,7 @@ export default function Home() {
       id: 'portrait-session',
       title: '人像攝影系列',
       description: '捕捉真實情感與個性光輝',
-      image: '/images/gallery/photo1.svg',
+      image: 'https://picsum.photos/800/600?random=1',
       dimensions: '800x600',
       category: '人像攝影'
     },
@@ -15,7 +15,7 @@ export default function Home() {
       id: 'landscape-morning',
       title: '晨光山水',
       description: '清晨第一道光線的溫柔擁抱',
-      image: '/images/gallery/photo2.svg',
+      image: 'https://picsum.photos/600/800?random=2',
       dimensions: '600x800',
       category: '風景攝影'
     },
@@ -23,7 +23,7 @@ export default function Home() {
       id: 'urban-architecture',
       title: '都市建築藝術',
       description: '現代建築與光影的完美結合',
-      image: '/images/gallery/photo3.svg',
+      image: 'https://picsum.photos/1200/800?random=3',
       dimensions: '1200x800',
       category: '建築攝影'
     },
@@ -31,7 +31,7 @@ export default function Home() {
       id: 'nature-details',
       title: '自然細節特寫',
       description: '微觀世界中的驚人發現',
-      image: '/images/gallery/photo4.svg',
+      image: 'https://picsum.photos/800/1000?random=4',
       dimensions: '800x1000',
       category: '微距攝影'
     },
@@ -39,7 +39,7 @@ export default function Home() {
       id: 'street-life',
       title: '街頭生活剪影',
       description: '捕捉城市脈動與人文故事',
-      image: '/images/gallery/photo5.svg',
+      image: 'https://picsum.photos/1000/600?random=5',
       dimensions: '1000x600',
       category: '街頭攝影'
     },
@@ -47,7 +47,7 @@ export default function Home() {
       id: 'product-showcase',
       title: '產品商業攝影',
       description: '展現產品質感與品牌價值',
-      image: '/images/gallery/photo6.svg',
+      image: 'https://picsum.photos/600/400?random=6',
       dimensions: '600x400',
       category: '商業攝影'
     }
@@ -117,11 +117,8 @@ export default function Home() {
                   <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button
                       onClick={() => {
-                        // 建立假下載連結
-                        const link = document.createElement('a');
-                        link.href = photo.image;
-                        link.download = `${photo.title.replace(/\s+/g, '_')}.svg`;
-                        link.click();
+                        // 由於使用 Picsum 範例圖片，提供說明
+                        alert(`這是範例圖片 (${photo.dimensions})\n\n類別：${photo.category}\n標題：${photo.title}\n\n請替換為您的實際攝影作品！`);
                       }}
                       className="flex-1 bg-white text-black px-3 py-2 rounded font-semibold text-sm hover:bg-gray-200 transition-colors"
                     >
