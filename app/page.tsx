@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
@@ -63,7 +62,7 @@ export default function Home() {
       {/* Contact Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">Let's Work Together</h2>
+          <h2 className="text-4xl font-bold mb-8">Let&apos;s Work Together</h2>
           <p className="text-xl text-gray-300 mb-12">
             Ready to capture your story? Get in touch for photography services.
           </p>
