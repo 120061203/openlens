@@ -6,9 +6,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // GitHub Pages 設定
-  basePath: process.env.NODE_ENV === 'production' ? '/openlens' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/openlens/' : '',
+  // 自訂網域設定 - 移除路徑前綴
 };
 
 export default nextConfig;

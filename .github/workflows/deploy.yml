@@ -84,9 +84,9 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
-          cname: openlens.github.io # 可選：設定自訂域名
+          cname: openlens.xsong.us # 自訂網域
 
       - name: 輸出部署資訊
         run: |
           echo "手動部署成功！"
-          echo "部署網址: https://120061203.github.io/openlens"
+          echo "部署網址: https://openlens.xsong.us"

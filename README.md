@@ -58,7 +58,7 @@
 部署成功後，你的網站將可在以下網址訪問：
 
 ```
-https://120061203.github.io/openlens
+https://openlens.xsong.us
 ```
 
 #### 靜態匯出設定說明
@@ -73,9 +73,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,        // 停用圖片優化（GitHub Pages 不支援）
   },
-  // GitHub Pages 設定
-  basePath: process.env.NODE_ENV === 'production' ? '/openlens' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/openlens/' : '',
+  // 自訂網域設定 - 無需路徑前綴
 };
 ```
 
